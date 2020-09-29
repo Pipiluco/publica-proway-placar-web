@@ -3,6 +3,8 @@ package life.pifrans.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public abstract class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
@@ -12,7 +14,11 @@ public abstract class User implements Serializable {
 	private Integer age;
 	private String email;
 	private String password;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date currentAccess;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date lastAccess;
 	private boolean isActive;
 

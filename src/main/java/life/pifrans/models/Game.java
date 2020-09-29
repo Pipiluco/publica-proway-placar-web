@@ -4,10 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Component
 public class Game implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private List<Player> players;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date date;
 	private Season season;
 

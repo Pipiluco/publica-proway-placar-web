@@ -2,6 +2,9 @@ package life.pifrans.models;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Score implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
