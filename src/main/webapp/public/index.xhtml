@@ -18,7 +18,7 @@
 				<p:inputNumber placeholder="Id"  value="#{seasonBean.season.id}" />
 				<p:inputNumber placeholder="Max"  value="#{seasonBean.season.maximumRecord}" />
 				<p:inputNumber placeholder="Min"  value="#{seasonBean.season.minimumRecord}" />
-				<p:commandButton value="Ação" action="#{seasonBean.delete}" />
+				<p:commandButton value="Ação" action="#{seasonBean.findAll}" />
 				
 				<p:outputLabel for="inline" value="Inline:" />
        			<p:calendar id="inline" mode="inline" />
