@@ -3,6 +3,9 @@ package life.pifrans.models;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Season implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
