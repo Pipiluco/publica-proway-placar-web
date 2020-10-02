@@ -1,5 +1,6 @@
 package life.pifrans.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import life.pifrans.models.Player;
 
 @Named
 @Scope(value = "view")
-public class PlayerBean {
+public class PlayerBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Autowired
 	private GenericController<Player> controller;
 
@@ -50,6 +53,7 @@ public class PlayerBean {
 		player.setActive(true);
 		player.setGame(null);
 		controller.save(player, SUB_PATH);
+		renew();
 		return PAGE_PLAYERS;
 	}
 

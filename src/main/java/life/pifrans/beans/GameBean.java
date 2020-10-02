@@ -41,7 +41,6 @@ public class GameBean implements Serializable {
 
 	public void find() {
 		game = controller.findById(Game.class, game.getId(), SUB_PATH);
-		System.out.println(game.getId() + " - " + game.getDate());
 	}
 
 	public void renew() {
@@ -50,6 +49,7 @@ public class GameBean implements Serializable {
 
 	public String save() {
 		controller.save(game, SUB_PATH);
+		renew();
 		return PAGE_GAMES;
 	}
 

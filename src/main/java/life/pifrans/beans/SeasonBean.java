@@ -42,7 +42,6 @@ public class SeasonBean implements Serializable {
 
 	public void find() {
 		season = controller.findById(Season.class, season.getId(), SUB_PATH);
-		System.out.println(season.getMaximumRecord() + " - " + season.getMinimumRecord());
 	}
 
 	public void renew() {
@@ -53,6 +52,7 @@ public class SeasonBean implements Serializable {
 		season.setMinimumRecord(0);
 		season.setMaximumRecord(0);
 		controller.save(season, SUB_PATH);
+		renew();
 		return PAGE_SEASONS;
 	}
 
