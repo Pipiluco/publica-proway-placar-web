@@ -16,10 +16,10 @@
 				<h:panelGrid>
 					<p:inputNumber placeholder="Id" padControl="false" disabled="true" value="#{gameBean.game.id}" />
 					<p:calendar placeholder="Data do jogo" value="#{gameBean.game.date}" locale="pt" pattern="dd/MM/yyyy HH:mm" mask="true"/>
-					<p:selectOneMenu value="#{gameBean.game.season}" converter="#{seasonConverter}">
-						<f:selectItems value="#{seasonBean.seasons}" var="object" itemLabel="#{object.id}"/>
-					</p:selectOneMenu>
 					
+					<p:selectOneMenu value="#{gameBean.game.season}" converter="#{seasonConverter}">
+						<f:selectItems value="#{seasonBean.seasons}" var="object" itemLabel="#{object.id}º Temporada"/>
+					</p:selectOneMenu>
 					
 					<util:buttons-crud managedBean="#{gameBean}" componentReload="panelCRUD, dtGames" buttonSave="#{gameBean.game.id == null}" buttonUpdate="#{gameBean.game.id != null}" 
 						buttonDelete="#{gameBean.game.id != null}" buttonNew="#{gameBean.game.id != null}" />
