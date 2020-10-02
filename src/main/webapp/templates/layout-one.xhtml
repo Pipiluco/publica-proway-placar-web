@@ -8,9 +8,15 @@
 
 <h:head>
 	<title><ui:insert name="title">Placar Pública</ui:insert></title>
+	<link rel="stylesheet" type="text/css" href="/css/main.css"/>
+	<script type="text/javascript" src="/js/localesCalendar.js" />
 </h:head>
 
 <body>
+	<script type="text/javascript" charset="UTF-8">
+		localeDatePtBr();
+	</script>
+	
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north" size="100" header="Menu">
 			<h:outputText value="North unit content." />
