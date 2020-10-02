@@ -3,16 +3,17 @@ package life.pifrans.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import life.pifrans.controllers.GenericController;
 import life.pifrans.models.Player;
 
 @Named
-@RequestScoped
+@Scope(value = "view")
 public class PlayerBean {
 	@Autowired
 	private GenericController<Player> controller;
@@ -20,31 +21,52 @@ public class PlayerBean {
 	@Autowired
 	private Player player;
 
+	private List<Player> players;
 	private static final String SUB_PATH = "players";
+	private static final String PAGE_PLAYERS = "/private/players.jsf";
 
-	public void findAll() {
-		List<Player> list = new ArrayList<>();
-		list = controller.listAll(Player[].class, SUB_PATH);
-		for (Player player : list) {
-			System.out.println(player.getName() + " - " + player.getLastName());
-		}
+	@PostConstruct
+	public void init() {
+		players = controller.listAll(Player[].class, SUB_PATH);
+	}
+
+	public List<Player> findAll() {
+		players = new ArrayList<>();
+		players = controller.listAll(Player[].class, SUB_PATH);
+		return players;
 	}
 
 	public void find() {
 		player = controller.findById(Player.class, player.getId(), SUB_PATH);
-		System.out.println(player.getName() + " - " + player.getLastName());
 	}
 
-	public void save() {
+	public void renew() {
+		player = new Player();
+	}
+
+	public String save() {
+		player.setCurrentAccess(null);
+		player.setLastAccess(null);
+		player.setActive(true);
+		player.setGame(null);
 		controller.save(player, SUB_PATH);
+		return PAGE_PLAYERS;
 	}
 
-	public void update() {
+	public String update() {
 		controller.update(player, player.getId(), SUB_PATH);
+		return PAGE_PLAYERS;
 	}
 
-	public void delete() {
+	public String delete(Player player) {
 		controller.delete(player.getId(), SUB_PATH);
+		return PAGE_PLAYERS;
+	}
+
+	public String delete() {
+		controller.delete(player.getId(), SUB_PATH);
+		renew();
+		return PAGE_PLAYERS;
 	}
 
 	public Player getPlayer() {
@@ -53,6 +75,14 @@ public class PlayerBean {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(List<Player> players) {
+		this.players = players;
 	}
 
 }
