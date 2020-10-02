@@ -15,7 +15,7 @@
 			<p:panel id="panelCRUD" header="#{gameBean.game.id == null ? 'Novo jogo' : 'Atualizar jogo'}">
 				<h:panelGrid>
 					<p:inputNumber placeholder="Id" padControl="false" disabled="true" value="#{gameBean.game.id}" />
-					<p:calendar placeholder="Data do jogo" disabled="#{gameBean.game.id == null}" value="#{gameBean.game.date}" locale="pt" pattern="dd/MM/yyyy HH:mm" mask="true"/>
+					<p:calendar placeholder="Data do jogo" value="#{gameBean.game.date}" locale="pt" pattern="dd/MM/yyyy HH:mm" mask="true"/>
 					<p:selectOneMenu value="#{gameBean.game.season}" converter="#{seasonConverter}">
 						<f:selectItems value="#{seasonBean.seasons}" var="object" itemLabel="#{object.id}"/>
 					</p:selectOneMenu>
@@ -41,6 +41,9 @@
 							<h:outputText value="#{object.date}" />
 						</p:column>
 
+						<p:column headerText="Temporada">
+							<h:outputText value="#{object.season.id}" />
+						</p:column>
 						<p:column headerText="Ações">
 							<p:commandButton value="Editar" update="panelCRUD" >
 								<f:setPropertyActionListener value="#{object}" target="#{gameBean.game}" />
