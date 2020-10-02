@@ -1,33 +1,42 @@
 package life.pifrans.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import life.pifrans.controllers.GenericController;
 import life.pifrans.models.Game;
 
 @Named
-@RequestScoped
-public class GameBean {
+@Scope(value = "view")
+public class GameBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Autowired
 	private GenericController<Game> controller;
 
 	@Autowired
 	private Game game;
 
+	private List<Game> games;
 	private static final String SUB_PATH = "games";
+	private static final String PAGE_GAMES = "/private/games.jsf";
+
+	@PostConstruct
+	public void init() {
+		games = controller.listAll(Game[].class, SUB_PATH);
+	}
 
 	public void findAll() {
-		List<Game> list = new ArrayList<>();
-		list = controller.listAll(Game[].class, SUB_PATH);
-		for (Game game : list) {
-			System.out.println(game.getId() + " - " + game.getDate());
-		}
+		games = new ArrayList<>();
+		games = controller.listAll(Game[].class, SUB_PATH);
+
 	}
 
 	public void find() {
@@ -35,16 +44,28 @@ public class GameBean {
 		System.out.println(game.getId() + " - " + game.getDate());
 	}
 
-	public void save() {
+	public void renew() {
+		game = new Game();
+	}
+
+	public String save() {
 		controller.save(game, SUB_PATH);
+		return PAGE_GAMES;
 	}
 
-	public void update() {
+	public String update() {
 		controller.update(game, game.getId(), SUB_PATH);
+		return PAGE_GAMES;
 	}
 
-	public void delete() {
+	public String delete() {
 		controller.delete(game.getId(), SUB_PATH);
+		return PAGE_GAMES;
+	}
+
+	public String delete(Game game) {
+		controller.delete(game.getId(), SUB_PATH);
+		return PAGE_GAMES;
 	}
 
 	public Game getGame() {
@@ -53,6 +74,14 @@ public class GameBean {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	public List<Game> getGames() {
+		return games;
+	}
+
+	public void setGames(List<Game> games) {
+		this.games = games;
 	}
 
 }
