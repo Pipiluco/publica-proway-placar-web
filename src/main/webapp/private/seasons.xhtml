@@ -28,24 +28,28 @@
 	<ui:define name="east">
 		<h:form prependId="false" id="formSeasons">
 			<p:panel header="Temporadas" id="panelSeasons">
-				<h:panelGrid id="plss">
+				<h:panelGrid>
 					<p:dataTable id="dtSeasons" var="object" value="#{seasonBean.seasons}">
 						<p:column headerText="Id">
 							<h:outputText value="#{object.id}" />
 						</p:column>
 
+						<p:column headerText="Número de jogos">
+							<h:outputText value="#{object.games.size()}" />
+						</p:column>
+
 						<p:column headerText="Mínimo da temporada">
 							<h:outputText value="#{object.minimumRecord}" />
 						</p:column>
-
+						
 						<p:column headerText="Máximo da temporada">
 							<h:outputText value="#{object.maximumRecord}" />
 						</p:column>
 						<p:column headerText="Ações">
-							<p:commandButton value="Editar" update="panelSeason" >
+							<p:commandButton icon="fa fa-fw fa-edit" title="Editar" update="panelSeason" >
 								<f:setPropertyActionListener value="#{object}" target="#{seasonBean.season}" />
 							</p:commandButton>
-							<p:commandButton value="Excluir" action="#{seasonBean.delete(object)}" update="panelSeason, dtSeasons" />
+							<p:commandButton icon="fa fa-fw fa-remove" title="Excluir" action="#{seasonBean.delete(object)}" update="panelSeason, dtSeasons" />
 						</p:column>
 					</p:dataTable>
 				</h:panelGrid>

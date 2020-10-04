@@ -18,8 +18,6 @@
 	</script>
 	
 	<p:layout fullPage="true">
-		<p:growl id="growlMain" life="5000" />
-		
 		<p:layoutUnit position="north" size="100" header="Menu">
 			<h:outputText value="North unit content." />
 		</p:layoutUnit>
@@ -43,10 +41,6 @@
 		<p:layoutUnit position="center">
         	<ui:insert name="center"></ui:insert>
     	</p:layoutUnit>
-    	
-		<p:layoutUnit position="east" size="60%">
-			<ui:insert name="east"></ui:insert>
-		</p:layoutUnit>
 
 		<p:layoutUnit position="south" size="10%" resizable="true">
 			<center>

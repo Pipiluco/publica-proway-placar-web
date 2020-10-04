@@ -17,10 +17,6 @@
 					<p:inputNumber placeholder="Id" padControl="false" disabled="true" value="#{roleBean.role.id}" />
 					<p:inputText placeholder="Acesso" value="#{roleBean.role.access}" />
 					
-					<p:selectOneMenu value="#{roleBean.role.player}" converter="#{playerConverter}">
-						<f:selectItems value="#{playerBean.players}" var="object" itemLabel="#{object.name} #{object.lastName}"/>
-					</p:selectOneMenu>
-					
 					<util:buttons-crud managedBean="#{roleBean}" componentReload="panelCRUD, dtRoles" buttonSave="#{roleBean.role.id == null}" buttonUpdate="#{roleBean.role.id != null}" 
 						buttonDelete="#{roleBean.role.id != null}" buttonNew="#{roleBean.role.id != null}" />
 				</h:panelGrid>
@@ -41,14 +37,11 @@
 							<h:outputText value="#{object.access}" />
 						</p:column>
 
-						<p:column headerText="Usuário">
-							<h:outputText value="#{object.player.id}" />
-						</p:column>
 						<p:column headerText="Ações">
-							<p:commandButton value="Editar" update="panelCRUD" >
+							<p:commandButton icon="fa fa-fw fa-edit" title="Editar" update="panelCRUD" >
 								<f:setPropertyActionListener value="#{object}" target="#{roleBean.role}" />
 							</p:commandButton>
-							<p:commandButton value="Excluir" action="#{roleBean.delete(object)}" update="panelCRUD, dtRoles" />
+							<p:commandButton icon="fa fa-fw fa-remove" title="Excluir" action="#{roleBean.delete(object)}" update="panelCRUD, dtRoles" />
 						</p:column>
 					</p:dataTable>
 				</h:panelGrid>

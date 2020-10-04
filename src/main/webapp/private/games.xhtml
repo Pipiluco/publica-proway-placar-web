@@ -15,7 +15,7 @@
 			<p:panel id="panelCRUD" header="#{gameBean.game.id == null ? 'Novo jogo' : 'Atualizar jogo'}">
 				<h:panelGrid>
 					<p:inputNumber placeholder="Id" padControl="false" disabled="true" value="#{gameBean.game.id}" />
-					<p:calendar placeholder="Data do jogo" value="#{gameBean.game.date}" locale="pt" pattern="dd/MM/yyyy HH:mm" mask="true"/>
+					<p:calendar placeholder="Data do jogo" value="#{gameBean.game.date}" locale="pt" pattern="dd/MM/yyyy HH:mm" mask="true" mindate="#{gameBean.currentDate}"/>
 					
 					<p:selectOneMenu value="#{gameBean.game.season}" converter="#{seasonConverter}">
 						<f:selectItems value="#{seasonBean.seasons}" var="object" itemLabel="#{object.id}º Temporada"/>
@@ -36,19 +36,25 @@
 						<p:column headerText="Id">
 							<h:outputText value="#{object.id}" />
 						</p:column>
+						
+						<p:column headerText="Pontos">
+							<h:outputText value="#{object.totalPoints}" />
+						</p:column>
 
 						<p:column headerText="Data do jogo">
-							<h:outputText value="#{object.date}" />
+							<h:outputText value="#{object.date}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
 						</p:column>
 
 						<p:column headerText="Temporada">
 							<h:outputText value="#{object.season.id}" />
 						</p:column>
 						<p:column headerText="Ações">
-							<p:commandButton value="Editar" update="panelCRUD" >
+							<p:commandButton icon="fa fa-fw fa-edit" title="Editar" update="panelCRUD" >
 								<f:setPropertyActionListener value="#{object}" target="#{gameBean.game}" />
 							</p:commandButton>
-							<p:commandButton value="Excluir" action="#{gameBean.delete(object)}" update="panelCRUD, dtGames" />
+							<p:commandButton icon="fa fa-fw fa-remove" title="Excluir" action="#{gameBean.delete(object)}" update="panelCRUD, dtGames" />
 						</p:column>
 					</p:dataTable>
 				</h:panelGrid>

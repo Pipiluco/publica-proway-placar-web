@@ -21,7 +21,7 @@
 					<p:inputText placeholder="Gênero" value="#{playerBean.player.gender}" />
 					<p:inputText placeholder="E-mail" value="#{playerBean.player.email}" />
 					
-					<util:buttons-crud managedBean="#{playerBean}" componentReload="panelCRUD, dtPlayers" buttonSave="#{playerBean.player.id == null}" buttonUpdate="#{playerBean.player.id != null}" 
+					<util:buttons-crud managedBean="#{playerBean}" componentReload="growlMain, panelCRUD, dtPlayers" buttonSave="#{playerBean.player.id == null}" buttonUpdate="#{playerBean.player.id != null}" 
 						buttonDelete="#{playerBean.player.id != null}" buttonNew="#{playerBean.player.id != null}" />
 				</h:panelGrid>
 			</p:panel>
@@ -57,10 +57,10 @@
 							<h:outputText value="#{object.email}" />
 						</p:column>
 						<p:column headerText="Ações">
-							<p:commandButton value="Editar" update="panelCRUD" >
+							<p:commandButton icon="fa fa-fw fa-edit" title="Editar" update="panelCRUD" >
 								<f:setPropertyActionListener value="#{object}" target="#{playerBean.player}" />
 							</p:commandButton>
-							<p:commandButton value="Excluir" action="#{playerBean.delete(object)}" update="panelCRUD, dtPlayers" />
+							<p:commandButton icon="fa fa-fw fa-remove" title="Excluir" action="#{playerBean.delete(object)}" update="panelCRUD, dtPlayers" />
 						</p:column>
 					</p:dataTable>
 				</h:panelGrid>
