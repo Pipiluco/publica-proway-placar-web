@@ -27,4 +27,10 @@ public class ScoreController extends GenericController<Score> {
 		List<Score> list = Arrays.asList(restTemplate.getForObject(url, Score[].class));
 		return list;
 	}
+
+	public int findPointsByGameId(String subPath, Long id) {
+		String url = BASE_URL + subPath + "/" + id + "/points";
+		int points = restTemplate.getForObject(url, Integer.class);
+		return points;
+	}
 }

@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import life.pifrans.controllers.GameController;
 import life.pifrans.controllers.ScoreController;
 import life.pifrans.models.Game;
-import life.pifrans.models.Score;
 
 @Named
 @Scope(value = "view")
@@ -39,14 +38,13 @@ public class GameBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		games = gameController.listAll(Game[].class, SUB_PATH);
+		updateTotalPoints(games);
+	}
+
+	public void updateTotalPoints(List<Game> games) {
 		for (Game game : games) {
 			game.setScores(scoreController.findScoresByGamesId("game", game.getId()));
-		}
-
-		for (Game game : games) {
-			for (Score score : game.getScores()) {
-				game.setTotalPoints(game.getTotalPoints() + score.getPoints());
-			}
+			game.setTotalPoints(scoreController.findPointsByGameId("game", game.getId()));
 			gameController.update(game, game.getId(), SUB_PATH);
 		}
 	}
