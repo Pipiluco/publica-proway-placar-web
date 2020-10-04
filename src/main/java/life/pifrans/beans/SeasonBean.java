@@ -15,6 +15,9 @@ import life.pifrans.controllers.SeasonController;
 import life.pifrans.models.Game;
 import life.pifrans.models.Season;
 
+/**
+ * Classe Bean para manipulação de dados em páginas web
+ */
 @Named
 @Scope(value = "view")
 public class SeasonBean implements Serializable {
@@ -37,6 +40,13 @@ public class SeasonBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		seasons = seasonController.listAll(Season[].class, SUB_PATH);
+		updateMinMaxPoints(seasons);
+	}
+	
+	/**
+	 * Busca os {@link Game} referente a {@link Season} e atualizar no banco a pontuação mínima e máxima por {@link Season} 
+	 */
+	public void updateMinMaxPoints(List<Season> seasons) {
 		for (Season season : seasons) {
 			season.setGames(gameController.findGamesBySeasonId("season", season.getId()));
 

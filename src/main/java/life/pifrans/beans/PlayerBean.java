@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Scope;
 import life.pifrans.controllers.GenericController;
 import life.pifrans.models.Player;
 
+/**
+ * Classe Bean para manipulação de dados em páginas web
+ */
 @Named
 @Scope(value = "view")
 public class PlayerBean implements Serializable {

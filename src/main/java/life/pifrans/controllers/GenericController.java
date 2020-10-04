@@ -14,6 +14,9 @@ import org.springframework.web.client.RestTemplate;
 
 import life.pifrans.exceptions.StandardError;
 
+/**
+ * Classe {@link Controller} genérica para trabalhar com a API
+ */
 @Controller
 public class GenericController<T> {
 	@Autowired

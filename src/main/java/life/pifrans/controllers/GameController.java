@@ -9,6 +9,9 @@ import org.springframework.web.client.RestTemplate;
 
 import life.pifrans.models.Game;
 
+/**
+ * Classe {@link Controller} para trabalhar com métodos {@link Game} específicos da API
+ */
 @Controller
 public class GameController extends GenericController<Game> {
 	@Autowired

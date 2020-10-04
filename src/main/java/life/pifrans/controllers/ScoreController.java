@@ -9,6 +9,9 @@ import org.springframework.web.client.RestTemplate;
 
 import life.pifrans.models.Score;
 
+/**
+ * Classe {@link Controller} para trabalhar com métodos {@link Score} específicos da API
+ */
 @Controller
 public class ScoreController extends GenericController<Score> {
 	@Autowired

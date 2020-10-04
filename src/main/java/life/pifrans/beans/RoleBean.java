@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Scope;
 import life.pifrans.controllers.GenericController;
 import life.pifrans.models.Role;
 
+/**
+ * Classe Bean para manipulação de dados em páginas web
+ */
 @Named
 @Scope(value = "view")
 public class RoleBean implements Serializable {

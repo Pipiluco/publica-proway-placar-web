@@ -1,5 +1,8 @@
 package life.pifrans.exceptions;
 
+/*
+ * Classe modelo para trabalhar com tratação de erro padrão
+ */
 import java.io.Serializable;
 
 public class StandardError implements Serializable {

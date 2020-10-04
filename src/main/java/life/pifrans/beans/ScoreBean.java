@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Scope;
 import life.pifrans.controllers.ScoreController;
 import life.pifrans.models.Score;
 
+/**
+ * Classe Bean para manipulação de dados em páginas web
+ */
 @Named
 @Scope(value = "view")
 public class ScoreBean implements Serializable {
