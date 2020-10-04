@@ -3,6 +3,12 @@ package life.pifrans.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public abstract class User implements Serializable {
@@ -11,7 +17,13 @@ public abstract class User implements Serializable {
 	private String name;
 	private String lastName;
 	private String gender;
+	
+	@NotNull(message = "Campo obrigatório!")
+	@Range(min = 5, max = 120, message = "A idade deve ser entre 5 e 120 anos!")
 	private Integer age;
+	
+	@NotEmpty(message = "Campo obrigatório!")
+	@Email(message = "E-mail inválido!")
 	private String email;
 	private String password;
 
@@ -21,6 +33,7 @@ public abstract class User implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date lastAccess;
 	private boolean isActive;
+	private Role role;
 
 	public Long getId() {
 		return id;
@@ -100,6 +113,14 @@ public abstract class User implements Serializable {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	@Override

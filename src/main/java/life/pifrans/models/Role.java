@@ -8,12 +8,10 @@ import org.springframework.stereotype.Component;
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private Player player;
+	private String access;
 
 	public Role() {
 	}
-
-	private String access;
 
 	public Long getId() {
 		return id;
@@ -21,14 +19,6 @@ public class Role implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 
 	public String getAccess() {

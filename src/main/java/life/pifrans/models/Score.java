@@ -9,7 +9,12 @@ public class Score implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Integer points;
+	private Integer minimumSeason;
+	private Integer maximumSeason;
+	private Integer minimumRecord;
+	private Integer maximumRecord;
 	private Player player;
+	private Game game;
 
 	public Long getId() {
 		return id;
@@ -27,12 +32,36 @@ public class Score implements Serializable {
 		this.points = points;
 	}
 
+	public Integer getMinimumSeason() {
+		return minimumSeason;
+	}
+
+	public Integer getMaximumSeason() {
+		return maximumSeason;
+	}
+
+	public Integer getMinimumRecord() {
+		return minimumRecord;
+	}
+
+	public Integer getMaximumRecord() {
+		return maximumRecord;
+	}
+
 	public Player getPlayer() {
 		return player;
 	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
 	@Override
