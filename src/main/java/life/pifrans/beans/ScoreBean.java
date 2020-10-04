@@ -10,7 +10,7 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-import life.pifrans.controllers.GenericController;
+import life.pifrans.controllers.ScoreController;
 import life.pifrans.models.Score;
 
 @Named
@@ -19,7 +19,7 @@ public class ScoreBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private GenericController<Score> controller;
+	private ScoreController scoreController;
 
 	@Autowired
 	private Score score;
@@ -30,12 +30,12 @@ public class ScoreBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		scores = controller.listAll(Score[].class, SUB_PATH);
+		scores = scoreController.listAll(Score[].class, SUB_PATH);
 	}
 
 	public List<Score> findAll() {
 		scores = new ArrayList<>();
-		scores = controller.listAll(Score[].class, SUB_PATH);
+		scores = scoreController.listAll(Score[].class, SUB_PATH);
 		return scores;
 	}
 
@@ -44,31 +44,41 @@ public class ScoreBean implements Serializable {
 	}
 
 	public void find() {
-		score = controller.findById(Score.class, score.getId(), SUB_PATH);
+		score = scoreController.findById(Score.class, score.getId(), SUB_PATH);
+	}
+
+	public Score findMinRecord(Long id) {
+		Score score = scoreController.findMinMaxRecord("min-record-player", id);
+		return score;
+	}
+
+	public Score findMaxRecord(Long id) {
+		Score score = scoreController.findMinMaxRecord("max-record-player", id);
+		return score;
 	}
 
 	public String save() {
-		controller.save(score, SUB_PATH);
+		scoreController.save(score, SUB_PATH);
 		renew();
 		return PAGE_SCORES;
 	}
 
 	public String update() {
-		controller.update(score, score.getId(), SUB_PATH);
+		scoreController.update(score, score.getId(), SUB_PATH);
 		return PAGE_SCORES;
 	}
 
 	public String delete(Score score) {
-		controller.delete(score.getId(), SUB_PATH);
+		scoreController.delete(score.getId(), SUB_PATH);
 		return PAGE_SCORES;
 	}
 
 	public String delete() {
-		controller.delete(score.getId(), SUB_PATH);
+		scoreController.delete(score.getId(), SUB_PATH);
 		renew();
 		return PAGE_SCORES;
 	}
-
+ 
 	public Score getScore() {
 		return score;
 	}

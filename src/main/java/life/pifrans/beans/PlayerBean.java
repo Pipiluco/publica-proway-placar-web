@@ -42,6 +42,11 @@ public class PlayerBean implements Serializable {
 	public void find() {
 		player = controller.findById(Player.class, player.getId(), SUB_PATH);
 	}
+	
+	public Player find(Long id) {
+		player = controller.findById(Player.class, id, SUB_PATH);
+		return player;
+	}
 
 	public void renew() {
 		player = new Player();
@@ -51,7 +56,6 @@ public class PlayerBean implements Serializable {
 		player.setCurrentAccess(null);
 		player.setLastAccess(null);
 		player.setActive(true);
-		player.setGame(null);
 		controller.save(player, SUB_PATH);
 		renew();
 		return PAGE_PLAYERS;

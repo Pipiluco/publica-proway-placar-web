@@ -2,6 +2,7 @@ package life.pifrans.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,8 +11,10 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-import life.pifrans.controllers.GenericController;
+import life.pifrans.controllers.GameController;
+import life.pifrans.controllers.ScoreController;
 import life.pifrans.models.Game;
+import life.pifrans.models.Score;
 
 @Named
 @Scope(value = "view")
@@ -19,28 +22,43 @@ public class GameBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private GenericController<Game> controller;
+	private GameController gameController;
+
+	@Autowired
+	private ScoreController scoreController;
 
 	@Autowired
 	private Game game;
 
 	private List<Game> games;
+
 	private static final String SUB_PATH = "games";
 	private static final String PAGE_GAMES = "/private/games.jsf";
+	private Date currentDate = new Date();
 
 	@PostConstruct
 	public void init() {
-		games = controller.listAll(Game[].class, SUB_PATH);
+		games = gameController.listAll(Game[].class, SUB_PATH);
+		for (Game game : games) {
+			game.setScores(scoreController.findScoresByGamesId("game", game.getId()));
+		}
+
+		for (Game game : games) {
+			for (Score score : game.getScores()) {
+				game.setTotalPoints(game.getTotalPoints() + score.getPoints());
+			}
+			gameController.update(game, game.getId(), SUB_PATH);
+		}
 	}
 
 	public void findAll() {
 		games = new ArrayList<>();
-		games = controller.listAll(Game[].class, SUB_PATH);
+		games = gameController.listAll(Game[].class, SUB_PATH);
 
 	}
 
 	public void find() {
-		game = controller.findById(Game.class, game.getId(), SUB_PATH);
+		game = gameController.findById(Game.class, game.getId(), SUB_PATH);
 	}
 
 	public void renew() {
@@ -48,24 +66,29 @@ public class GameBean implements Serializable {
 	}
 
 	public String save() {
-		controller.save(game, SUB_PATH);
+		gameController.save(game, SUB_PATH);
 		renew();
 		return PAGE_GAMES;
 	}
 
 	public String update() {
-		controller.update(game, game.getId(), SUB_PATH);
+		gameController.update(game, game.getId(), SUB_PATH);
 		return PAGE_GAMES;
 	}
 
 	public String delete() {
-		controller.delete(game.getId(), SUB_PATH);
+		gameController.delete(game.getId(), SUB_PATH);
 		return PAGE_GAMES;
 	}
 
 	public String delete(Game game) {
-		controller.delete(game.getId(), SUB_PATH);
+		gameController.delete(game.getId(), SUB_PATH);
 		return PAGE_GAMES;
+	}
+
+	public List<Game> findGamesBySeasonId() {
+		games = gameController.findGamesBySeasonId("season", 1L);
+		return games;
 	}
 
 	public Game getGame() {
@@ -84,4 +107,11 @@ public class GameBean implements Serializable {
 		this.games = games;
 	}
 
+	public Date getCurrentDate() {
+		return currentDate;
+	}
+
+	public void setCurrentDate(Date currentDate) {
+		this.currentDate = currentDate;
+	}
 }

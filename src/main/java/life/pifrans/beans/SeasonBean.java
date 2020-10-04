@@ -10,7 +10,9 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-import life.pifrans.controllers.GenericController;
+import life.pifrans.controllers.GameController;
+import life.pifrans.controllers.SeasonController;
+import life.pifrans.models.Game;
 import life.pifrans.models.Season;
 
 @Named
@@ -19,7 +21,10 @@ public class SeasonBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private GenericController<Season> controller;
+	private SeasonController seasonController;
+
+	@Autowired
+	private GameController gameController;
 
 	@Autowired
 	private Season season;
@@ -31,17 +36,34 @@ public class SeasonBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		seasons = controller.listAll(Season[].class, SUB_PATH);
+		seasons = seasonController.listAll(Season[].class, SUB_PATH);
+		for (Season season : seasons) {
+			season.setGames(gameController.findGamesBySeasonId("season", season.getId()));
+
+			List<Game> games = season.getGames();
+			season.setMinimumRecord(games.get(0).getTotalPoints());
+			season.setMaximumRecord(games.get(0).getTotalPoints());
+
+			for (Game game : games) {
+				if (game.getTotalPoints() < season.getMinimumRecord()) {
+					season.setMinimumRecord(game.getTotalPoints());
+				}
+				if (game.getTotalPoints() > season.getMaximumRecord()) {
+					season.setMaximumRecord(game.getTotalPoints());
+				}
+				seasonController.update(season, season.getId(), SUB_PATH);
+			}
+		}
 	}
 
 	public List<Season> findAll() {
 		seasons = new ArrayList<>();
-		seasons = controller.listAll(Season[].class, SUB_PATH);
+		seasons = seasonController.listAll(Season[].class, SUB_PATH);
 		return seasons;
 	}
 
 	public void find() {
-		season = controller.findById(Season.class, season.getId(), SUB_PATH);
+		season = seasonController.findById(Season.class, season.getId(), SUB_PATH);
 	}
 
 	public void renew() {
@@ -51,23 +73,23 @@ public class SeasonBean implements Serializable {
 	public String save() {
 		season.setMinimumRecord(0);
 		season.setMaximumRecord(0);
-		controller.save(season, SUB_PATH);
+		seasonController.save(season, SUB_PATH);
 		renew();
 		return PAGE_SEASONS;
 	}
 
 	public String update() {
-		controller.update(season, season.getId(), SUB_PATH);
+		seasonController.update(season, season.getId(), SUB_PATH);
 		return PAGE_SEASONS;
 	}
 
 	public String delete(Season season) {
-		controller.delete(season.getId(), SUB_PATH);
+		seasonController.delete(season.getId(), SUB_PATH);
 		return PAGE_SEASONS;
 	}
 
 	public String delete() {
-		controller.delete(season.getId(), SUB_PATH);
+		seasonController.delete(season.getId(), SUB_PATH);
 		season = new Season();
 		return PAGE_SEASONS;
 	}
